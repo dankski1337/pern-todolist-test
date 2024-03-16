@@ -1,0 +1,6 @@
+# FILL WITH SENSITIVE FILES FROM THIS PROJECT
+
+node_modules
+.env
+package-lock.json
+*.log
