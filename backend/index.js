@@ -1,21 +1,15 @@
 import Express from "express";
 import pool from "./src/configs/database/config_db.js";
 import dotenv from "dotenv";
+import authRoutes from "./src/routes/authRoutes.js";
 
 dotenv.config();
 const app = Express();
-
 const port = process.env.PORT || 3000;
 
-app.get("/", (req, res) => {
-  pool.query("SELECT NOW()", (err, result) => {
-    if (err) {
-      throw err;
-    } else {
-      res.status(200).send(result.rows);
-    }
-  });
-});
+app.use(Express.json());
+
+app.use("/api/v1/auth", authRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
