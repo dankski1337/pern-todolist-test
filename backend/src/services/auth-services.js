@@ -1,4 +1,4 @@
-import pool from "../configs/database/config_db.js";
+import pool from "../configs/database/config-db.js";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 
@@ -25,20 +25,20 @@ async function loginUser(req) {
   const client = await pool.connect();
 
   const user = await client.query("SELECT * FROM users WHERE name = $1::VARCHAR(50)", [name]);
-  if(user.rowCount === 0) {
+  if (user.rowCount === 0) {
     throw new Error("User not found");
   }
   const match = await bcrypt.compare(password, user.rows[0].password);
-  if(!match) {
+  if (!match) {
     throw new Error("Invalid Password");
   }
   const last_login = new Date();
-  const result = await client.query("UPDATE users SET last_login = $1::TIMESTAMP WHERE name = $2::VARCHAR(50)", [last_login, name]);
+  await client.query("UPDATE users SET last_login = $1::TIMESTAMP WHERE name = $2::VARCHAR(50)", [last_login, name]);
   client.release();
-  return result;
+  return user.rows[0];
 }
 
-export const userService = {
+export const authService = {
   registerUser,
   loginUser,
 };

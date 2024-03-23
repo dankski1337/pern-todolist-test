@@ -1,8 +1,10 @@
 import Express from "express";
 import dotenv from "dotenv";
-import authRoutes from "./src/routes/authRoutes.js";
-import errorHandler from "./src/middleware/errorHandlingMiddleware.js";
+import errorHandler from "./src/middlewares/error-handling-middleware.js";
 import bodyparser from "body-parser";
+import verifyToken from "./src/middlewares/auth-jwt.js";
+import authRoutes from "./src/routes/auth-routes.js";
+import todoListRoutes from "./src/routes/todo-list-routes.js";
 
 dotenv.config();
 const app = Express();
@@ -11,7 +13,11 @@ const port = process.env.PORT || 3000;
 app.use(bodyparser.json());
 app.use(Express.json());
 
+// public routes
 app.use("/api/v1/auth", authRoutes);
+
+// private routes
+app.use("/api/v1/todo", verifyToken, todoListRoutes);
 
 app.use(errorHandler);
 
