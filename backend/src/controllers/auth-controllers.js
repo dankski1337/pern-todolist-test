@@ -6,12 +6,14 @@ async function registerUser(req, res, next) {
   try {
     if (!req.body.name || !req.body.password) {
       throw new responseError("Invalid input", 400, false);
-    }
-    await authService.registerUser(req);
+    }	  
+    const name = req.body.name;
+    const password = req.body.password;
+    await authService.registerUser(name, password);
     res.status(201).json({
       success: true,
       message: "User created successfully",
-      username: req.body.name,
+      name: name,
     });
   } catch (err) {
     // postgres error code for unique constraint violation
@@ -28,7 +30,9 @@ async function loginUser(req, res, next) {
     if (!req.body.name || !req.body.password) {
       throw new responseError("Invalid input", 400, false);
     }
-    let result = await authService.loginUser(req);
+    const name = req.body.name;
+    const password = req.body.password;
+    const result = await authService.loginUser(name, password);
 
     // Generate jwt
     const token = jwt.sign({ id_user: result.id }, process.env.JWT_SECRET, {
@@ -38,7 +42,7 @@ async function loginUser(req, res, next) {
     res.status(200).json({
       success: true,
       message: "User logged in successfully",
-      username: req.body.name,
+      name: name,
       token: token
     });
 

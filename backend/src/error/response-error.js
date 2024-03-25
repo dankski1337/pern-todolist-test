@@ -1,5 +1,5 @@
 class responseError extends Error {
-  constructor(message, code, success, stack) {
+  constructor(message, code, success) {
     super(message);
     this.code = code;
     this.success = success;

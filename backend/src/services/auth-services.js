@@ -4,8 +4,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-async function registerUser(req) {
-  const { name, password } = req.body;
+async function registerUser(name, password) {
   const created_at = new Date();
   const id = crypto.randomUUID();
   const saltRounds = parseInt(process.env.SALT_ROUNDS);
@@ -20,8 +19,7 @@ async function registerUser(req) {
   return result;
 }
 
-async function loginUser(req) {
-  const { name, password } = req.body;
+async function loginUser(name, password) {
   const client = await pool.connect();
 
   const user = await client.query("SELECT * FROM users WHERE name = $1::VARCHAR(50)", [name]);

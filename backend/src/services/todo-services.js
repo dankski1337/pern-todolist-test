@@ -1,7 +1,6 @@
 import pool from "../configs/database/config-db.js";
 
-async function createTodo(req) {
-  const { id_user, title, description } = req.body;
+async function createTodo(id_user, title, description) {
   const client = await pool.connect();
   const created_at = new Date();
 
@@ -13,8 +12,7 @@ async function createTodo(req) {
   return result;
 }
 
-async function getTodos(req) {
-  const { id_user } = req.body;
+async function getTodos(id_user) {
   const client = await pool.connect();
 
   const results = await client.query(
@@ -25,9 +23,7 @@ async function getTodos(req) {
   return results;
 }
 
-async function getTodo(req) {
-  const id_user = req.body.id_user; // id_user is a parameter in the http request body
-  const id_todo = req.params.id_todo; // id_todo is a parameter in the URL
+async function getTodo(id_user, id_todo) {
   const client = await pool.connect();
 
   const result = await client.query(
