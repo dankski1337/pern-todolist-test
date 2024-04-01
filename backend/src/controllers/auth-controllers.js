@@ -4,11 +4,11 @@ import jwt from "jsonwebtoken";
 
 async function registerUser(req, res, next) {
   try {
-    if (!req.body.name || !req.body.password) {
-      throw new responseError("Invalid input", 400, false);
-    }	  
     const name = req.body.name;
     const password = req.body.password;
+    if (!name || !password) {
+      throw new responseError("Invalid input", 400, false);
+    }
     await authService.registerUser(name, password);
     res.status(201).json({
       success: true,
@@ -27,11 +27,11 @@ async function registerUser(req, res, next) {
 
 async function loginUser(req, res, next) {
   try {
-    if (!req.body.name || !req.body.password) {
-      throw new responseError("Invalid input", 400, false);
-    }
     const name = req.body.name;
     const password = req.body.password;
+    if (!name || !password) {
+      throw new responseError("Invalid input", 400, false);
+    }
     const result = await authService.loginUser(name, password);
 
     // Generate jwt
