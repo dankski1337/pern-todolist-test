@@ -1,8 +1,5 @@
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 import { responseError } from '../error/response-error.js';
-
-dotenv.config();
 
 const verifyToken = (req, res, next) => {
     // check request header for token
@@ -13,7 +10,7 @@ const verifyToken = (req, res, next) => {
         throw new responseError("No token provided", 403, false);
     }
     // if token format is invalid, return 400 Bad Request
-    if(token.split(" ")[0] !== "Bearer" || token.split(" ").length !== 2){
+    if (token.split(" ")[0] !== "Bearer" || token.split(" ").length !== 2) {
         throw new responseError("Invalid token format", 400, false);
     }
 

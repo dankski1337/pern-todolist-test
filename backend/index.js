@@ -1,12 +1,10 @@
 import Express from "express";
-import dotenv from "dotenv";
 import errorHandler from "./src/middlewares/error-handling-middleware.js";
 import bodyparser from "body-parser";
 import verifyToken from "./src/middlewares/auth-jwt.js";
 import authRoutes from "./src/routes/auth-routes.js";
 import todoListRoutes from "./src/routes/todo-list-routes.js";
 
-dotenv.config();
 const app = Express();
 const port = process.env.PORT || 3000;
 

@@ -1,8 +1,5 @@
 import pool from "../configs/database/config-db.js";
 import bcrypt from "bcrypt";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 async function registerUser(name, password) {
   const created_at = new Date();
